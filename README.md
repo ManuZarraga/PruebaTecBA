@@ -1,11 +1,11 @@
 # Prueba Técnica · Manuel Zarraga
 
-Este repositorio contiene mi solución completa para la prueba técnica: está organizada en secciones lógicas Backend, Frontend, SQL y GIT (Y ) cada una autónoma, documentada y lista para revisar.
+Este repositorio contiene mi solución completa para la prueba técnica: está organizada en secciones lógicas Backend, Frontend, SQL y GIT (y el archivo Postman por separado).
 
 ---
 
 ## 1. Sección Backend + Postman
-Construí el backend usando NodeJs y Express y lo conecté a MongoDB en local. En el código creo el modelo de Producto y configuro la conección a Mongo, las rutas para utilizar y el controlador para cada una de las operaciones. El archivo json de Postman para probar los endpoints se encuentra en otra carpeta separada.
+Construí el backend usando NodeJs y Express y lo conecté a MongoDB en local. En el código creo el modelo de Producto y configuro la conección a Mongo, las rutas para utilizar y el controlador para cada una de las operaciones. El archivo json de Postman para probar los endpoints se encuentra en otra carpeta separada en la raiz del repositorio.
 
 - Node.js (v16.19.1)
 - Express (Framework web)
