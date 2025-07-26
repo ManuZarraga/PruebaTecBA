@@ -1,0 +1,21 @@
+Simulando que contamos con la branch Master y la branch DEV, donde la última está 
+adelantada dado que tiene nuevas funcionalidades. 
+¿Qué pasos seguiría para resolver los siguientes requerimientos? Las soluciones pueden ser 
+en palabras o con comandos GIT. 
+a) Se quiere revertir la última funcionalidad pusheada en branch DEV 
+b) Se quiere hacer un deploy en producción de la versión que llamaremos v1.2.0 
+
+a) Para resolver este escenario, primero voy a la rama DEV con checkout. Despues, usando el comando git log y la flag "--oneline -n 1" para que me de el hash del último commit realizado en un formato más corto y simple. Continuo haciendo un revert con el hash del commit que busqué antes y finalizo pusheando ese nuevo commit a la rama. 
+
+git checkout DEV
+git log --oneline -n 1
+git revert <hash del commit a eliminar>
+git push origin DEV
+
+b) Primero, creo una tag de la última version de la rama usando la flag -a para nombrarla "v1.2.0" y la flag -m para darle una descripción. Pusheo la tag, me muevo a la rama master y hago un merge de la rama DEV usando la flag --no-ff para que cree un hito histórico en la rama y facilite futuros logs. Finalmente hago el push a master, terminando el deploy de la versión. 
+
+git tag -a v1.2.0 -m "Versión 1.2.0 para producción"
+git push origin v1.2.0
+git checkout master
+git merge DEV --no-ff -m "Deploy v1.2.0 a producción"
+git push origin master

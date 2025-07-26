@@ -1,0 +1,78 @@
+CREATE TABLE Producto (
+    id_Producto INT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(50),
+    descripcion VARCHAR(150),
+    precio DECIMAL,
+    cantidad INT 
+);
+CREATE TABLE Cliente (
+    id_Cliente INT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(50),
+    email VARCHAR(50),
+    direccion VARCHAR(100)
+);
+CREATE TABLE Venta (
+    id_Venta INT PRIMARY KEY NOT NULL,
+    fecha DATETIME,
+    id_Cliente INT,
+    monto_total DECIMAL,
+    estado VARCHAR(50),
+    FOREIGN KEY (id_Cliente) REFERENCES Cliente(id_Cliente)
+);
+CREATE TABLE DetalleVenta (
+    id_Detalle INT PRIMARY KEY NOT NULL,
+    id_Venta INT,
+    id_Producto INT,
+    cantidad INT,
+    precio_unitario DECIMAL,
+    FOREIGN KEY (id_Venta) REFERENCES Venta(id_Venta),
+    FOREIGN KEY (id_Producto) REFERENCES Producto(id_Producto)
+);
+
+INSERT INTO Producto (id_Producto, nombre, descripcion, precio, cantidad) VALUES
+(1, 'Teclado', 'Teclado mecánico retroiluminado', 3500.00, 25),
+(2, 'Mouse', 'Mouse óptico inalámbrico', 1500.00, 40),
+(3, 'Monitor', 'Monitor LED 24 pulgadas', 25000.00, 10),
+(4, 'Auriculares', NULL, 4200.00, 15),
+(5, 'Parlante Bluetooth', NULL, 7800.00, 8),
+(6, 'Webcam HD', NULL, 5400.00, 12);
+
+INSERT INTO Cliente (id_Cliente, nombre, email, direccion) VALUES
+(1, 'Juan Pérez', 'johndoe@ejemplo.com', 'Calle 123'),
+(2, 'Ana Gómez', 'janedoe@ejemplo.com', 'Avenida 456');
+
+INSERT INTO Venta (id_Venta, fecha, id_Cliente, monto_total, estado) VALUES
+(1, '2025-07-25 10:00:00', 1, 5000.00, 'Completada'),
+(2, '2025-07-25 12:30:00', 2, 26500.00, 'Pendiente'),
+(3, '2025-05-20 15:00:00', 1, 7000.00, 'Pendiente'),
+(4, '2025-03-15 17:30:00', 2, 30500.00, 'Pendiente');
+
+INSERT INTO DetalleVenta (id_Detalle, id_Venta, id_Producto, cantidad, precio_unitario) VALUES
+(1, 1, 1, 1, 3500.00), 
+(2, 1, 2, 1, 1500.00), 
+(3, 2, 3, 1, 25000.00), 
+(4, 2, 2, 1, 1500.00);
+
+
+a)
+SELECT * FROM Producto
+WHERE descripcion IS NULL AND nombre IS NOT NULL;
+
+b)
+SELECT DISTINCT p.*
+FROM Producto p
+JOIN DetalleVenta dv ON p.id_Producto = dv.id_Producto
+JOIN Venta v ON dv.id_Venta = v.id_Venta
+WHERE v.fecha >= NOW() - INTERVAL 1 DAY;
+
+c)
+SELECT estado, COUNT(*) AS cantidad
+FROM Venta
+GROUP BY estado;
+
+d)
+SELECT v.*
+FROM Venta v
+JOIN Cliente c ON v.id_Cliente = c.id_Cliente
+WHERE c.email = 'johndoe@ejemplo.com'
+  AND v.monto_total > 4000.00;
